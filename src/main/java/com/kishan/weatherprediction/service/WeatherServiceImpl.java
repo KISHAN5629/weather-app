@@ -89,9 +89,11 @@ public class WeatherServiceImpl implements WeatherService {
 
             // Limit to 3 days
             List<Forecast> summarizedForecasts = new ArrayList<>(dailyForecasts.values());
-            if(summarizedForecasts.size()<3)
-                log.warn("Api got less than 3 days of weather data city :{} days :{}",city,summarizedForecasts.size());
-            summarizedForecasts = summarizedForecasts.subList(0, 3);
+
+            if(summarizedForecasts.size()>3)
+                summarizedForecasts = summarizedForecasts.subList(0, 3);
+            else log.warn("Api got less than 3 days of weather data city :{} days :{}",city,summarizedForecasts.size());
+
 
             return new WeatherResponse(city, summarizedForecasts);
         } catch (Exception e) {
